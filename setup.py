@@ -60,6 +60,7 @@ def compile_pop_phased():
     )
     dst_path = os.path.join(sys.prefix, 'bin')
     with cd(src_path):
+        print("Inside {}".format(os.getcwd()))
         print('# rfmix: (pop-phased cmd) {}'.format(cmd))
         sp.check_call(cmd, shell=True)
         print('# rfmix: (pop-phased) {} -> {}'.format(output, dst_path))
@@ -85,6 +86,7 @@ def compile_trio_phased():
     )
     dst_path = os.path.join(sys.prefix, 'bin')
     with cd(src_path):
+        print("Inside {}".format(os.getcwd()))
         print('# rfmix: (trio-phased cmd) {}'.format(cmd))
         sp.check_call(cmd, shell=True)
         print('# rfmix: (tro-phased) {} -> {}'.format(output, dst_path))
