@@ -56,7 +56,7 @@ def compile_pop_phased():
         cxx=cxx,
         options=' '.join(cxx_options),
         srcs=' '.join(srcs),
-        output=output
+        out=output
     )
     dst_path = os.path.join(sys.prefix, 'bin')
     with cd(src_path):
@@ -81,7 +81,7 @@ def compile_trio_phased():
         cxx=cxx,
         options=' '.join(cxx_options),
         srcs=' '.join(srcs),
-        output=output
+        out=output
     )
     dst_path = os.path.join(sys.prefix, 'bin')
     with cd(src_path):
@@ -113,6 +113,6 @@ setup(
     package_data={
         '': ['TestData/*', 'PopPhased/*', 'TrioPhased/*'],
     },
-    python_requries='>=2.6, <3',
+    python_requires='>=2.6, <3',
     cmdclass={'install': CustomInstall}
 )
