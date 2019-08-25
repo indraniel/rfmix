@@ -64,7 +64,7 @@ def compile_pop_phased():
         print('# rfmix: (pop-phased cmd) {}'.format(cmd))
         sp.check_call(cmd, shell=True)
         print('# rfmix: (pop-phased) {} -> {}'.format(output, dst_path))
-        shutil.copyfile(output, dst_path)
+        shutil.copy2(output, dst_path)
 
 def compile_trio_phased():
     src_path = './TrioPhased/'
@@ -90,7 +90,7 @@ def compile_trio_phased():
         print('# rfmix: (trio-phased cmd) {}'.format(cmd))
         sp.check_call(cmd, shell=True)
         print('# rfmix: (tro-phased) {} -> {}'.format(output, dst_path))
-        shutil.copyfile(output, dst_path)
+        shutil.copy2(output, dst_path)
 
 def compile_and_install_software():
     """Use the subprocess module to compile/install the C software."""
