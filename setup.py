@@ -17,7 +17,9 @@ class cd:
     def __exit__(self, etype, value, traceback):
         os.chdir(self.saved_path)
 
-# based on: https://stackoverflow.com/questions/33168482/compiling-installing-c-executable-using-pythons-setuptools-setup-py
+# based on:
+# * https://stackoverflow.com/questions/33168482/compiling-installing-c-executable-using-pythons-setuptools-setup-py
+# * https://blog.niteo.co/setuptools-run-custom-code-in-setup-py/
 def setup_compiler():
     for var in ['CC', 'CXX', 'CPPFLAGS', 'CFLAGS', 'LDFLAGS']:
         if var in os.environ:
@@ -101,7 +103,7 @@ def compile_and_install_software():
 class CustomInstall(install):
     def run(self):
         compile_and_install_software()
-        super().run()
+        install.run(self)
 
 setup(
     name="RFMix",
