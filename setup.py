@@ -114,9 +114,7 @@ setup(
     author_email='idas@wustl.edu',
     description='A discriminative method for local ancestry inference',
     url='https://sites.google.com/site/rfmixlocalancestryinference/',
-    package_data={
-        '': ['TestData/*', 'PopPhased/*', 'TrioPhased/*'],
-    },
     python_requires='>=2.6, <3',
+    include_package_data=True,
     cmdclass={'install': CustomInstall}
 )

@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include VersionHistory.txt
+recursive-include docs *
+recursive-include TestData *
+recursive-include TrioPhased *
+recursive-include PopPhased *
