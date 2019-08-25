@@ -124,11 +124,11 @@ for option in options.keys():
     parameters.append(str(options[option]))
 
 if args. admixed_phasing == "TrioPhased":
-  command = " ".join(["./TrioPhased/RFMix_TrioPhased"] + parameters)
+  command = " ".join(["RFMix_TrioPhased"] + parameters)
   print command
   os.system(command)
 elif args.admixed_phasing == "PopPhased":
-  command = " ".join(["./PopPhased/RFMix_PopPhased"] + parameters)
+  command = " ".join(["RFMix_PopPhased"] + parameters)
   print command
   os.system(command)
   
