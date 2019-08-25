@@ -1,0 +1,17 @@
+1.0.1: 
+Added a newline at the end of PopPhased/crfviterbi.cpp due to compiler warning on some compilers (note: this did affect RFMix performance in any way)
+1.0.2: 
+Specified that RunRFMix.py is not compatible with Python v3.x
+1.5: 
+Marginal probabilities (i.e. Forward Backward estimates) now calcluated in phase correction mode as well
+New option to set minimum node size (see new Recommendations section of Manual)
+Stack memory usage decreased
+Total memory usage decreased
+1.5.1
+Fixed but from v1.5 where Rephased output file didn't format correctly
+1.5.2
+New --succinct-output parameter that greatly reduces the output file sizes
+1.5.3
+Replaced --correct-phase option with a required argument where the user explicitly specifies whether the samples were trio-phased or population-phased. In the population-phased case the phasing will be corrected as before. This was done to add extra emphasis to the importance of accounting for and correcting phase if population phasing was performed.
+1.5.4
+Fixed bug introduced in 1.5.3 where parallelization was always set to off
