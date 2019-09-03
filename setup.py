@@ -1,7 +1,7 @@
 from __future__ import print_function
 from setuptools import setup, find_packages
 from setuptools.command.install import install
-import sysconfig, os, shutil
+import sysconfig, os, shutil, sys
 import subprocess as sp
 
 # based on: https://stackoverflow.com/questions/431684/how-do-i-change-directory-cd-in-python
