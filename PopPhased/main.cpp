@@ -31,7 +31,7 @@ int main (int argc, char ** argv) {
   vector<bool> * admWindows = processedInput->admWindows;
   int numEmIterations = processedInput->numEmIterations;
   int useAnc = processedInput->useAnc;
-  int* numAdmPhasings = processedInput->numAdmPhasings;
+  long long int* numAdmPhasings = processedInput->numAdmPhasings;
   
   // For each window, columns are Ind1Phasing1Chrom1Anc1, Ind1Phasing1Chrom1Anc2, Ind1Phasing1Chrom2Anc1
   double** rfProbs = new double*[numWindows];
@@ -113,7 +113,7 @@ int main (int argc, char ** argv) {
     
     // Get new potential phasings
     vector<bool> * admWindowsPhasings = processedInput->admWindowsPhasings;
-    int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
+    long long int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
     int numAdmInds = numAdm / 2;
     for(int windex = 0; windex < numWindows; windex++){
       int start = 0;

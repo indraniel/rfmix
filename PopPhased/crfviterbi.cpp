@@ -11,8 +11,8 @@ int** CrfViterbi(ProcessedInput* processedInput, double ** rfProbs, int** window
   vector<double> * windowEndLocs = processedInput->windowEndLocs;
   vector<int> * windowBeginIndexes = processedInput->windowBeginIndexes;
   vector<int> * windowEndIndexes = processedInput->windowEndIndexes;
-  int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
-  int* numAdmPhasings = processedInput->numAdmPhasings;
+  long long int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
+  long long int* numAdmPhasings = processedInput->numAdmPhasings;
   vector<bool>* admWindows = processedInput->admWindows;
   vector<bool>* admWindowsPhasings = processedInput->admWindowsPhasings;
   vector<int> * hapClasses = processedInput->hapClasses;

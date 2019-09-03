@@ -12,7 +12,7 @@ using namespace std;
 
 struct ProcessedInput{
   int numSNPs;
-  int numWindows;
+  long long int numWindows;
   int numHaps;
   int numAncPops;
   int numAdm;
@@ -36,8 +36,8 @@ struct ProcessedInput{
   int callAnc;    // Include anc in adm after first iteration
   int useAnc;    // Use anc as anc after first iteration
   vector<bool> * admWindowsPhasings;
-  int ** numHetSitesPerInd;
-  int * numAdmPhasings;
+  long long int ** numHetSitesPerInd;
+  long long int * numAdmPhasings;
   int minNodeSize;
   bool doForwardBackward;
   bool compressedOutput;

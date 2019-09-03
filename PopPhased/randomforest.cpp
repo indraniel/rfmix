@@ -22,8 +22,8 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
   vector<bool> * admWindowsPhasings = processedInput->admWindowsPhasings;
   int bootstrapSampleSize = processedInput->bootstrapSampleSize;
   int bootstrappingMethod = processedInput->bootstrappingMethod;
-  int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
-  int* numAdmPhasings = processedInput->numAdmPhasings;
+  long long int** numHetSitesPerInd = processedInput->numHetSitesPerInd;
+  long long int* numAdmPhasings = processedInput->numAdmPhasings;
   int minNodeSize = processedInput->minNodeSize;
   
   int numAdmInds = numAdm / 2;

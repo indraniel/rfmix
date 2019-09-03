@@ -153,7 +153,7 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   
   // ===== Read in SNPs to exclude. 0 indexed =====
   int numPruned = 0;
-  vector<int> excludeIndices;
+  vector<long long int> excludeIndices;
   if(params["-x"].length() != 0){
     ifstream excludes;  // assume one column
     excludes.open(params["-x"].c_str());
@@ -283,7 +283,7 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   cout << "Number of SNPs Read: " << forPruneLineIndex << endl;
   cout << "Number of SNPs to Exclude: " << numPruned << endl;
   cout << "Number left after pruning: " << numSNPs << endl;
-  int numWindows = (int) windowBeginLocs->size();
+  long long int numWindows = (long long int) windowBeginLocs->size();
   cout << "Number of windows: " << numWindows << endl;
     
   snpPos.close();
@@ -360,28 +360,28 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   // each window is a single matrix to keep everything together in memory. Use multiplication to get different snp lines
   // Keep this the same for EM because no calls on Adm yet
   vector<bool> * ancWindows = new vector<bool>[numWindows];
-  for(int windex = 0; windex < numWindows; windex++){
-    int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
-    int windowBlockSize = numSNPsInWindow * numAnc;
+  for(long long int windex = 0; windex < numWindows; windex++){
+    long long int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
+    long long int windowBlockSize = numSNPsInWindow * numAnc;
     ancWindows[windex] = vector<bool>(windowBlockSize, false);
   }
   
   // EM: nothing changed because changed numAdm above
   vector<bool> * admWindows = new vector<bool>[numWindows];
-  for(int windex = 0; windex < numWindows; windex++){
-    int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
-    int windowBlockSize = numSNPsInWindow * numAdm;
+  for(long long int windex = 0; windex < numWindows; windex++){
+    long long int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
+    long long int windowBlockSize = numSNPsInWindow * numAdm;
     admWindows[windex] = vector<bool>(windowBlockSize, false);
   }
   
   int* ancHapClasses = new int[numAnc];
   
   string snpLineString;
-  int snpIndex = 0;
-  int windowIndex = 0;
-  int numSNPsInWindow = (*windowEndIndexes)[windowIndex] - (*windowBeginIndexes)[windowIndex] + 1;
-  int alleleLineIndex = 0;
-  unsigned int allelePruneIndex = 0;
+  long long int snpIndex = 0;
+  long long int windowIndex = 0;
+  long long int numSNPsInWindow = (*windowEndIndexes)[windowIndex] - (*windowBeginIndexes)[windowIndex] + 1;
+  long long int alleleLineIndex = 0;
+  long long int allelePruneIndex = 0;
   while(!alleles.eof()){
     getline(alleles, snpLineString);
     
@@ -443,14 +443,14 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   // Stores number of het sites in each admixed individual per window
   cout << "Creating phasings" << endl;
   int numAdmInds = numAdm / 2;
-  int** numHetSitesPerInd = new int*[numWindows];    // numWindows x numAdmInds
-  for(int windex = 0; windex < numWindows; windex++){
-    numHetSitesPerInd[windex] = new int[numAdmInds];
-    int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
+  long long int** numHetSitesPerInd = new long long int*[numWindows];    // numWindows x numAdmInds
+  for(long long int windex = 0; windex < numWindows; windex++){
+    numHetSitesPerInd[windex] = new long long int[numAdmInds];
+    long long int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
     for(int admInd = 0; admInd < numAdmInds; admInd++){
       numHetSitesPerInd[windex][admInd] = 0;
     }
-    for(int snpIndex = 0; snpIndex < numSNPsInWindow; snpIndex++){
+    for(long long int snpIndex = 0; snpIndex < numSNPsInWindow; snpIndex++){
       for(int admInd = 0; admInd < numAdmInds; admInd++){
         int allele1 = admWindows[windex][snpIndex*numAdm + 2*admInd];
         int allele2 = admWindows[windex][snpIndex*numAdm + 2*admInd+1];
@@ -464,8 +464,8 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   
   // Figure out dimensions for array containing the different possible phasings of each admixed individual
   // Assume 0 or 1 switches per window
-  int * numAdmPhasings = new int[numWindows];
-  for(int windex = 0; windex < numWindows; windex++){
+  long long int * numAdmPhasings = new long long int[numWindows];
+  for(long long int windex = 0; windex < numWindows; windex++){
     numAdmPhasings[windex] = 0;
     for(int admInd = 0; admInd < numAdmInds; admInd++){
       numAdmPhasings[windex] += numHetSitesPerInd[windex][admInd] + 1;    // original phasing plus one switch per het site
@@ -475,16 +475,16 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   // Stores all phasings
   // For each person, phasing go: original, last switched, 2nd to last and after switched, etc.
   vector<bool> * admWindowsPhasings = new vector<bool>[numWindows];
-  for(int windex = 0; windex < numWindows; windex++){
-    int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
-    int windowBlockSize = numSNPsInWindow * numAdmPhasings[windex]*2;
+  for(long long int windex = 0; windex < numWindows; windex++){
+    long long int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
+    long long int windowBlockSize = numSNPsInWindow * numAdmPhasings[windex]*2;
     admWindowsPhasings[windex] = vector<bool>(windowBlockSize, false);
   }
   
-  for(int windex = 0; windex < numWindows; windex++){
+  for(long long int windex = 0; windex < numWindows; windex++){
     int start = 0;
-    int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
-    int numHapsInWindow = numAdmPhasings[windex]*2;
+    long long int numSNPsInWindow = (*windowEndIndexes)[windex] - (*windowBeginIndexes)[windex] + 1;
+    long long int numHapsInWindow = numAdmPhasings[windex]*2;
     for(int admInd = 0; admInd < numAdmInds; admInd++){
       int indNumHetSites = numHetSitesPerInd[windex][admInd];
       int indNumHaps = 2*(indNumHetSites+1);
@@ -492,7 +492,7 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
       
       int hetIndex = 0;
       // go bottom to top
-      for(int snpIndex = numSNPsInWindow-1; snpIndex >= 0; snpIndex--){
+      for(long long int snpIndex = numSNPsInWindow-1; snpIndex >= 0; snpIndex--){
         int allele1 = admWindows[windex][snpIndex*numAdm + 2*admInd];
         int allele2 = admWindows[windex][snpIndex*numAdm + 2*admInd + 1];
         if (allele1 != allele2){
@@ -500,8 +500,8 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
         }
         for(int phasing = 0; phasing < indNumPhasings; phasing++){
           // if phasing < hetIndex just copy; otherwise switch; do for hom sites too bc doesn't matter
-          int col1 = start + 2*phasing;
-          int col2 = start + 2*phasing + 1;
+          long long int col1 = start + 2*phasing;
+          long long int col2 = start + 2*phasing + 1;
           
           if(phasing < hetIndex){
             admWindowsPhasings[windex][snpIndex*numHapsInWindow + col1] = allele1;
@@ -542,7 +542,7 @@ ProcessedInput* processInput(int argc, char ** argv, ofstream * logfile){
   //Step 9: Store the data
   ProcessedInput* processedInput = new ProcessedInput();
   processedInput->numSNPs = numSNPs;
-  processedInput->numWindows = (int) numWindows;
+  processedInput->numWindows = (long long int) numWindows;
   processedInput->numHaps = numHaps;
   processedInput->numAncPops = numAncPops;
   processedInput->numAdm = numAdm;
