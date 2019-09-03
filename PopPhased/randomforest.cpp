@@ -6,7 +6,7 @@
 
 #define NOGOOD -1
 
-void Tree(int numHomogSNPs, bool* snpHomogParam, int windex, int firstSNPIndex, int windowNumSNPs, unsigned int mtry, int numAncPops, int bootstrapSample[], int numAdm, int numAnc, int* ancHapClasses, vector<bool> * ancWindows, vector<bool> * admWindows, int admHere[], double** treeCounts, int depth, int minNodeSize);
+void Tree(int numHomogSNPs, bool* snpHomogParam, int windex, int firstSNPIndex, int windowNumSNPs, unsigned int mtry, int numAncPops, int bootstrapSample[], long long int numAdm, int numAnc, int* ancHapClasses, vector<bool> * ancWindows, vector<bool> * admWindows, int admHere[], double** treeCounts, int depth, int minNodeSize);
 
 double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, int emIteration){
   int numWindows = processedInput->numWindows;
@@ -51,7 +51,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
     //cout << "WINDEX: " << windex << endl;
     //cout << omp_get_num_threads() << endl;
     // Phasing
-    int thisWindowNumAdm = numAdmPhasings[windex]*2;
+    long long int thisWindowNumAdm = numAdmPhasings[windex]*2;
     
     //    cout << endl;
     //cout << "WINDOW: " << windex << endl;
@@ -175,7 +175,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
           
           // this is alligned with admWindowsPhasings, not admWindows
           int admHere[thisWindowNumAdm];  // tracks which admixed are in current branch
-          for (int i = 0; i < thisWindowNumAdm; i++){
+          for (long long int i = 0; i < thisWindowNumAdm; i++){
               admHere[i] = 0;
           }
           
@@ -194,7 +194,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
 //            cout << admIndTesting << endl;
 //            cout << admHapStartIndex <<endl;
 //            cout << thisAdmIndNumPhasings << endl;
-//            for (int i = 0; i < thisWindowNumAdm; i++){
+//            for (long long int i = 0; i < thisWindowNumAdm; i++){
 //              cout << admHere[i] << " ";
 //            }
 //            cout << endl;
@@ -204,7 +204,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
 //            cout << endl;
 //          }
           
-          Tree(0, snpHomog, windex, firstSNPIndex, windowNumSNPs, mtry, numAncPops, bootstrapSample, thisWindowNumAdm, numAnc, ancHapClasses, ancWindows, admWindowsPhasings, admHere, treeCounts, 0, minNodeSize);
+          Tree(0, snpHomog, windex, firstSNPIndex, windowNumSNPs, mtry, numAncPops, bootstrapSample, (long long int) thisWindowNumAdm, numAnc, ancHapClasses, ancWindows, admWindowsPhasings, admHere, treeCounts, 0, minNodeSize);
         }
         
         admHapStartIndex += thisAdmIndNumPhasings * 2;
@@ -248,7 +248,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
         }
         
         int admHere[thisWindowNumAdm];  // tracks which admixed are in current branch
-        for (int i = 0; i < thisWindowNumAdm; i++){
+        for (long long int i = 0; i < thisWindowNumAdm; i++){
           admHere[i] = 1;
         }
         
@@ -257,7 +257,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
           snpHomog[i] = false;
         }
         
-        Tree(0, snpHomog, windex, firstSNPIndex, windowNumSNPs, mtry, numAncPops, bootstrapSample, thisWindowNumAdm, numAnc, ancHapClasses, ancWindows, admWindowsPhasings, admHere, treeCounts, 0, minNodeSize);
+        Tree(0, snpHomog, windex, firstSNPIndex, windowNumSNPs, mtry, numAncPops, bootstrapSample, (long long int) thisWindowNumAdm, numAnc, ancHapClasses, ancWindows, admWindowsPhasings, admHere, treeCounts, 0, minNodeSize);
       }
     }
     delete[] numHapsInEachPop;
