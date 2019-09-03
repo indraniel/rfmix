@@ -296,7 +296,7 @@ double ** RandomForest(ProcessedInput* processedInput, double** admClassProbs, i
   return admClassProbs;
 }
 
-void Tree(int numHomogSNPs, bool* snpHomogParam, int windex, int firstSNPIndex, int windowNumSNPs, unsigned int mtry, int numAncPops, int bootstrapSample[], int numAdm, int numAnc, int * ancHapClasses, vector<bool>* ancWindows, vector<bool>* admWindows, int admHere[], double** treeCounts, int depth, int minNodeSize){
+void Tree(int numHomogSNPs, bool* snpHomogParam, int windex, int firstSNPIndex, int windowNumSNPs, unsigned int mtry, int numAncPops, int bootstrapSample[], long long int numAdm, int numAnc, int * ancHapClasses, vector<bool>* ancWindows, vector<bool>* admWindows, int admHere[], double** treeCounts, int depth, int minNodeSize){
   bool * snpHomog = new bool[windowNumSNPs];
   for(int i = 0; i < windowNumSNPs; i++){
     snpHomog[i] = snpHomogParam[i];
